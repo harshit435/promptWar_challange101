@@ -1,68 +1,74 @@
-# PromptWar Challenge 101 🏆
+# SmartCook AI — Web App
 
-Welcome to the **PromptWar Challenge 101** repository! This repository is dedicated to solving prompt engineering challenges and building competitive LLM prompting strategies.
+SmartCook AI is a Flutter web application that plans meals around your day, budget, dietary preferences, and available ingredients. The web build is configured for Firebase Hosting and is ready to deploy from the `build/web` folder.
 
-## 🎯 Challenge Goal
+## Features
+- Input-driven meal planning: busy level, budget, people count, diet preference, and pantry ingredients
+- Daily summary and estimated cooking time
+- Interactive timeline and plan score
+- Editable grocery list with estimated costs and savings
+- Substitution toggles that re-evaluate the plan
+- Responsive layout with dark/light themes
 
-The objective of this challenge is to design, refine, and optimize prompts to achieve the highest performance, accuracy, or specific target behavior from a language model under given constraints.
+## Local development (run in browser)
+1. Ensure Flutter is installed and web support is enabled:
 
-## 📂 Project Structure
+```bash
+flutter --version
+flutter config --list  # confirm enable-web: true
+```
 
-*(Fill this section as you add source code, prompts, and evaluation datasets.)*
+2. Run the app on the web-server (open the provided URL in a browser):
 
-- `prompts/` - Directory to store your prompt templates.
-- `src/` - Source code for interacting with the LLM APIs and running evaluations.
-- `tests/` - Test cases to validate prompt behavior.
+```bash
+flutter run -d web-server --web-port 8080 --web-hostname 127.0.0.1
+```
 
-## ⚙️ Setup and Installation
+Or run on Chrome if available:
 
-1.  **Clone the repository** (if not already done):
-    ```bash
-    git clone https://github.com/harshit435/promptWar_challange101.git
-    cd promptWar_challange101
-    ```
+```bash
+flutter run -d chrome
+```
 
-2.  **Set up your environment variables**:
-    Create a `.env` file at the root of the repository and add your API keys:
-    ```env
-    OPENAI_API_KEY=your_key_here
-    GEMINI_API_KEY=your_key_here
-    ```
+## Build for production
 
-3.  **Install dependencies**:
-    *(Define your dependencies in a requirements.txt or pyproject.toml file.)*
-    ```bash
-    pip install -r requirements.txt
-    ```
+```bash
+flutter build web --release
+```
 
-## 📈 Evaluation
+This writes optimized static assets to `build/web`.
 
-Detail how to run prompt evaluations and track metrics.
+## Deploy to Firebase Hosting
+1. Create a Firebase project in the Firebase console (or use an existing one).
+2. Install the Firebase CLI (if not installed):
 
-## Firebase Hosting
+```bash
+npm install -g firebase-tools
+```
 
-This app is already configured for Firebase Hosting as a Flutter web app.
+3. Log in and select the project (the repository includes `.firebaserc` with the project id `smart-ai-cook`):
 
-1. Create a Firebase project in the Firebase Console.
-2. Install the Firebase CLI if you do not already have it:
-    ```bash
-    npm install -g firebase-tools
-    ```
-3. Log in and select your project:
-    ```bash
-    firebase login
-    firebase use --add
-    ```
-4. Build the Flutter web app:
-    ```bash
-    flutter build web --release
-    ```
-5. Deploy to Hosting:
-    ```bash
-    firebase deploy --only hosting
-    ```
+```bash
+firebase login
+firebase use --add
+```
 
-The Hosting config serves `build/web` and rewrites all routes to `index.html`, which is the standard setup for Flutter single-page apps.
+4. Build and deploy:
+
+```bash
+flutter build web --release
+firebase deploy --only hosting
+```
+
+After deploy the site will be available at `https://<your-project-id>.web.app` (for example `https://smart-ai-cook.web.app`).
+
+## Files added for Hosting
+- `firebase.json` — hosting configuration (serves `build/web` and rewrites to `index.html`)
+- `.firebaserc` — project binding (default: `smart-ai-cook`)
+
+## Troubleshooting
+- If you see the Firebase default page after deploy, ensure `firebase.json` has `public: "build/web"` and that you deployed after running `flutter build web --release`.
+- Try an incognito window or clear cache if you get cached content.
 
 ---
-Good luck with the challenge! 🚀
+If you'd like, I can update this further with screenshots, a demo link, or CI instructions for automatic deploys.
